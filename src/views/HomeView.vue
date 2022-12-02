@@ -60,15 +60,39 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div
-          class="col-12 col-md-3 mb-5"
-          v-for="item in listIdeas"
-          :key="item.id"
-        >
-          <card-ideas :item="item" />
+      <b-skeleton-wrapper :loading="loading">
+        <template #loading>
+          <div class="row">
+            <div class="col-12 col-md-3 mb-5" v-for="i in 4" :key="i">
+              <b-card
+                no-body
+                img-top
+                class="card h-100 border-0 shadow-sm"
+                style="border-radius: 12px; overflow: hidden"
+              >
+                <b-skeleton-img card-img="top" aspect="3:2"></b-skeleton-img>
+                <b-card-body>
+                  <b-skeleton width="85%"></b-skeleton>
+                  <b-skeleton width="55%"></b-skeleton>
+                  <b-skeleton width="70%"></b-skeleton>
+                </b-card-body>
+              </b-card>
+            </div>
+          </div>
+        </template>
+        <div class="row" v-if="(listIdeas && listIdeas).length > 0">
+          <div
+            v-for="item in listIdeas"
+            :key="item.id"
+            class="col-12 col-md-3 mb-5"
+          >
+            <card-ideas :item="item" />
+          </div>
         </div>
-      </div>
+        <div v-else class="text-center p-5">
+          <h1>Tidak ada data ideas</h1>
+        </div>
+      </b-skeleton-wrapper>
       <div class="overflow-auto">
         <div class="my-5">
           <b-pagination
@@ -87,6 +111,8 @@
 <script>
 import CardIdeas from "@/components/CardIdeas.vue";
 import axios from "axios";
+import Swal from "sweetalert2";
+
 export default {
   name: "HomeView",
   components: {
@@ -106,6 +132,7 @@ export default {
         { value: "published_at", text: "Newest" },
         { value: "-published_at", text: "Oldest" },
       ],
+      loading: true,
     };
   },
   mounted() {
@@ -144,7 +171,12 @@ export default {
           this.listIdeas = response.data.data;
         })
         .catch((error) => {
-          console.log(error);
+          Swal.fire({
+            title: "Error!",
+            text: error.response?.data?.message,
+            icon: "error",
+            confirmButtonText: "Ok",
+          });
         })
         .finally(() => (this.loading = false));
     },
