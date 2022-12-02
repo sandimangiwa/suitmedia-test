@@ -5,7 +5,12 @@
       fixed="top"
       toggleable="lg"
       type="dark"
-      style="background-color: #ff6404"
+      style="
+        background-color: #ff6404;
+        -webkit-transition: all 0.15s linear;
+        transition: all 0.15s linear;
+        will-change: background, transform;
+      "
     >
       <div class="container">
         <b-navbar-brand to="/">
