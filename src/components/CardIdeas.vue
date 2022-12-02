@@ -15,7 +15,9 @@
       />
     </div>
     <div class="card-body">
-      <h6 class="card-subtitle mb-2 text-muted">{{ item.published_at }}</h6>
+      <h6 class="card-subtitle mb-2 text-muted text-uppercase">
+        {{ formatDate(item.published_at) }}
+      </h6>
       <h5 class="card-title font-weight-bolder text-overflow-ellipsis-3">
         {{ item.title }}
       </h5>
@@ -42,6 +44,17 @@ export default {
         // width: "300vw",
       },
     };
+  },
+  methods: {
+    formatDate(date) {
+      const options = {
+        // weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      return new Date(date).toLocaleDateString("in", options);
+    },
   },
 };
 </script>
