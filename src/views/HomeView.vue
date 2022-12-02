@@ -159,4 +159,20 @@ export default {
   background-size: cover;
   background-attachment: fixed;
 }
+.b-pagination-pills .page-item .page-link {
+  border-radius: 12px !important;
+  line-height: 1.5 !important;
+  border-color: white;
+}
+.page-link {
+  color: black;
+  font-weight: 600;
+}
+.page-item.active .page-link {
+  background-color: #ff6404;
+}
+.page-link:hover {
+  background-color: #ff640417;
+  color: #ff6404;
+}
 </style>
